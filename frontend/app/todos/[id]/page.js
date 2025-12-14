@@ -1,14 +1,14 @@
 /**
  * Edit task page
  */
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { getUser, isAuthenticated } from '../../../lib/auth';
-import { tasksAPI } from '../../../lib/api';
-import Navbar from '../../../components/Navbar';
-import TodoForm from '../../../components/TodoForm';
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { getUser, isAuthenticated } from "../../../../.specify/lib/auth.js";
+import { tasksAPI } from "../../../.specify/lib/api.js";
+import Navbar from "../../../components/Navbar";
+import TodoForm from "../../../components/TodoForm";
 
 export default function EditTaskPage() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function EditTaskPage() {
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      router.push('/login');
+      router.push("/login");
       return;
     }
 
@@ -42,9 +42,9 @@ export default function EditTaskPage() {
       const data = await tasksAPI.get(user.id, taskId);
       setTask(data);
     } catch (error) {
-      console.error('Failed to fetch task:', error);
-      alert('Task not found');
-      router.push('/todos');
+      console.error("Failed to fetch task:", error);
+      alert("Task not found");
+      router.push("/todos");
     } finally {
       setLoading(false);
     }
@@ -54,9 +54,9 @@ export default function EditTaskPage() {
     setSubmitting(true);
     try {
       await tasksAPI.update(user.id, taskId, data);
-      router.push('/todos');
+      router.push("/todos");
     } catch (error) {
-      console.error('Failed to update task:', error);
+      console.error("Failed to update task:", error);
       throw error;
     } finally {
       setSubmitting(false);
@@ -64,7 +64,7 @@ export default function EditTaskPage() {
   };
 
   const handleCancel = () => {
-    router.push('/todos');
+    router.push("/todos");
   };
 
   if (!user || loading) {
