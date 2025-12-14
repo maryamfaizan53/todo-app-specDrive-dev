@@ -1,14 +1,14 @@
 /**
  * Create new task page
  */
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { getUser, isAuthenticated } from '../../../lib/auth';
-import { tasksAPI } from '../../../lib/api';
-import Navbar from '../../../components/Navbar';
-import TodoForm from '../../../components/TodoForm';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getUser, isAuthenticated } from "../../../lib/auth";
+import { tasksAPI } from "../../../lib/api";
+import Navbar from "../components/Navbar";
+import TodoForm from "../components/TodoForm";
 
 export default function NewTaskPage() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function NewTaskPage() {
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      router.push('/login');
+      router.push("/login");
       return;
     }
 
@@ -29,9 +29,9 @@ export default function NewTaskPage() {
     setLoading(true);
     try {
       await tasksAPI.create(user.id, data);
-      router.push('/todos');
+      router.push("/todos");
     } catch (error) {
-      console.error('Failed to create task:', error);
+      console.error("Failed to create task:", error);
       throw error;
     } finally {
       setLoading(false);
@@ -39,7 +39,7 @@ export default function NewTaskPage() {
   };
 
   const handleCancel = () => {
-    router.push('/todos');
+    router.push("/todos");
   };
 
   if (!user) {
@@ -56,7 +56,9 @@ export default function NewTaskPage() {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Create New Task</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">
+            Create New Task
+          </h1>
           <TodoForm
             onSubmit={handleSubmit}
             onCancel={handleCancel}
