@@ -68,23 +68,37 @@ export async function login(email, password) {
   // This is a mock implementation for demonstration
   // In production, this should call Better Auth login endpoint
 
-  // For demo, create a mock JWT token and user
+  // For demo, create a mock user
   const mockUser = {
     id: 'demo-user-' + Math.random().toString(36).substr(2, 9),
     email: email,
     name: email.split('@')[0]
   };
 
-  // Create a mock JWT token (in production, this comes from Better Auth)
-  const mockToken = btoa(JSON.stringify({
-    sub: mockUser.id,
-    email: mockUser.email,
-    iat: Date.now() / 1000,
-    exp: Date.now() / 1000 + 86400 // 24 hours
-  }));
+  // Create a proper JWT token using jose library
+  try {
+    const { SignJWT } = await import('jose');
+    const secret = new TextEncoder().encode(
+      process.env.NEXT_PUBLIC_BETTER_AUTH_SECRET ||
+      'my-super-secret-key-that-is-at-least-32-characters-long-12345'
+    );
 
-  setAuth(mockUser, mockToken);
-  return mockUser;
+    const token = await new SignJWT({
+      sub: mockUser.id,
+      email: mockUser.email,
+      name: mockUser.name
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('24h')
+      .sign(secret);
+
+    setAuth(mockUser, token);
+    return mockUser;
+  } catch (error) {
+    console.error('Error creating JWT:', error);
+    throw new Error('Failed to create authentication token');
+  }
 }
 
 /**
