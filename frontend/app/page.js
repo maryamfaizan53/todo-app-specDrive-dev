@@ -5,7 +5,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '../lib/auth';
+import { isAuthenticated } from '@/lib/auth';
 import Link from 'next/link';
 
 export default function HomePage() {

@@ -5,8 +5,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getUser, isAuthenticated } from '../../lib/auth';
-import { tasksAPI } from '../../lib/api';
+import { getUser, isAuthenticated } from '@/lib/auth';
+import { tasksAPI } from '@/lib/api';
 import Navbar from '../../components/Navbar';
 import TodoList from '../../components/TodoList';
 import TodoFilters from '../../components/TodoFilters';

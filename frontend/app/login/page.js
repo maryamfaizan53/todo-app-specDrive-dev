@@ -5,7 +5,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "../../../.specify/lib/auth.js";
+import { login } from "@/lib/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
